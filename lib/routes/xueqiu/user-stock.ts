@@ -3,6 +3,7 @@ import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { parseDate } from '@/utils/parse-date';
+import { getJsonResult } from '@/routes/xueqiu/cookies';
 
 export const route: Route = {
     path: '/user_stock/:id',
@@ -54,15 +55,7 @@ async function handler(ctx) {
 
     const {
         user: { screen_name },
-    } = await ofetch('https://xueqiu.com/statuses/original/show.json', {
-        query: {
-            user_id: id,
-        },
-        headers: {
-            Cookie: cookie,
-            Referer: `https://xueqiu.com/u/${id}`,
-        },
-    });
+    } = await getJsonResult('https://xueqiu.com/statuses/original/show.json', cookie);
 
     return {
         title: `${screen_name} 的雪球自选动态`,
