@@ -53,9 +53,11 @@ async function handler(ctx) {
         },
     });
 
+    const url = `https://xueqiu.com/statuses/original/show.json?user_id=${id}`;
+
     const {
         user: { screen_name },
-    } = await getJsonResult('https://xueqiu.com/statuses/original/show.json', cookie);
+    } = await getJsonResult(url, cookie);
 
     return {
         title: `${screen_name} 的雪球自选动态`,
